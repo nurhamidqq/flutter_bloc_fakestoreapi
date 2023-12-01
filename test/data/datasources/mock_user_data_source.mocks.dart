@@ -3,13 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:flutter_bloc_fakestoreapi/data/datasources/user_data_source.dart'
-    as _i3;
-import 'package:flutter_bloc_fakestoreapi/data/models/user.dart' as _i2;
+    as _i4;
+import 'package:flutter_bloc_fakestoreapi/data/models/auth.dart' as _i2;
+import 'package:flutter_bloc_fakestoreapi/data/models/user.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,8 +24,18 @@ import 'package:mockito/src/dummies.dart' as _i5;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUserModel_0 extends _i1.SmartFake implements _i2.UserModel {
-  _FakeUserModel_0(
+class _FakeAuthModel_0 extends _i1.SmartFake implements _i2.AuthModel {
+  _FakeAuthModel_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeUserModel_1 extends _i1.SmartFake implements _i3.UserModel {
+  _FakeUserModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -37,50 +47,50 @@ class _FakeUserModel_0 extends _i1.SmartFake implements _i2.UserModel {
 /// A class which mocks [UserDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserDataSource extends _i1.Mock implements _i3.UserDataSource {
+class MockUserDataSource extends _i1.Mock implements _i4.UserDataSource {
   @override
-  _i4.Future<String> userLogin(
-    String? username,
+  _i5.Future<_i2.AuthModel> userLogin(
+    String? email,
     String? password,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #userLogin,
           [
-            username,
+            email,
             password,
           ],
         ),
-        returnValue: _i4.Future<String>.value(_i5.dummyValue<String>(
+        returnValue: _i5.Future<_i2.AuthModel>.value(_FakeAuthModel_0(
           this,
           Invocation.method(
             #userLogin,
             [
-              username,
+              email,
               password,
             ],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<String>.value(_i5.dummyValue<String>(
+            _i5.Future<_i2.AuthModel>.value(_FakeAuthModel_0(
           this,
           Invocation.method(
             #userLogin,
             [
-              username,
+              email,
               password,
             ],
           ),
         )),
-      ) as _i4.Future<String>);
+      ) as _i5.Future<_i2.AuthModel>);
 
   @override
-  _i4.Future<_i2.UserModel> userDetail(String? id) => (super.noSuchMethod(
+  _i5.Future<_i3.UserModel> userDetail(int? id) => (super.noSuchMethod(
         Invocation.method(
           #userDetail,
           [id],
         ),
-        returnValue: _i4.Future<_i2.UserModel>.value(_FakeUserModel_0(
+        returnValue: _i5.Future<_i3.UserModel>.value(_FakeUserModel_1(
           this,
           Invocation.method(
             #userDetail,
@@ -88,12 +98,12 @@ class MockUserDataSource extends _i1.Mock implements _i3.UserDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.UserModel>.value(_FakeUserModel_0(
+            _i5.Future<_i3.UserModel>.value(_FakeUserModel_1(
           this,
           Invocation.method(
             #userDetail,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.UserModel>);
+      ) as _i5.Future<_i3.UserModel>);
 }

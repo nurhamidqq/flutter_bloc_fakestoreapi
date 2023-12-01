@@ -8,7 +8,8 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:flutter_bloc_fakestoreapi/core/errors/server_failure.dart'
     as _i5;
-import 'package:flutter_bloc_fakestoreapi/domain/entities/users.dart' as _i6;
+import 'package:flutter_bloc_fakestoreapi/domain/entities/auth.dart' as _i6;
+import 'package:flutter_bloc_fakestoreapi/domain/entities/users.dart' as _i7;
 import 'package:flutter_bloc_fakestoreapi/domain/repositories/user_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -41,68 +42,68 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// See the documentation for Mockito's code generation for more information.
 class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
   @override
-  _i4.Future<_i2.Either<_i5.ServerFailure, String>> login(
-    String? username,
+  _i4.Future<_i2.Either<_i5.ServerFailure, _i6.AuthEntity>> login(
+    String? email,
     String? password,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #login,
           [
-            username,
+            email,
             password,
           ],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.ServerFailure, String>>.value(
-            _FakeEither_0<_i5.ServerFailure, String>(
+        returnValue:
+            _i4.Future<_i2.Either<_i5.ServerFailure, _i6.AuthEntity>>.value(
+                _FakeEither_0<_i5.ServerFailure, _i6.AuthEntity>(
           this,
           Invocation.method(
             #login,
             [
-              username,
+              email,
               password,
             ],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.ServerFailure, String>>.value(
-                _FakeEither_0<_i5.ServerFailure, String>(
+            _i4.Future<_i2.Either<_i5.ServerFailure, _i6.AuthEntity>>.value(
+                _FakeEither_0<_i5.ServerFailure, _i6.AuthEntity>(
           this,
           Invocation.method(
             #login,
             [
-              username,
+              email,
               password,
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.ServerFailure, String>>);
+      ) as _i4.Future<_i2.Either<_i5.ServerFailure, _i6.AuthEntity>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.ServerFailure, _i6.UserEntity>> userDetail(
-          String? id) =>
+  _i4.Future<_i2.Either<_i5.ServerFailure, _i7.UserEntity>> userDetail() =>
       (super.noSuchMethod(
         Invocation.method(
           #userDetail,
-          [id],
+          [],
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.ServerFailure, _i6.UserEntity>>.value(
-                _FakeEither_0<_i5.ServerFailure, _i6.UserEntity>(
+            _i4.Future<_i2.Either<_i5.ServerFailure, _i7.UserEntity>>.value(
+                _FakeEither_0<_i5.ServerFailure, _i7.UserEntity>(
           this,
           Invocation.method(
             #userDetail,
-            [id],
+            [],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.ServerFailure, _i6.UserEntity>>.value(
-                _FakeEither_0<_i5.ServerFailure, _i6.UserEntity>(
+            _i4.Future<_i2.Either<_i5.ServerFailure, _i7.UserEntity>>.value(
+                _FakeEither_0<_i5.ServerFailure, _i7.UserEntity>(
           this,
           Invocation.method(
             #userDetail,
-            [id],
+            [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.ServerFailure, _i6.UserEntity>>);
+      ) as _i4.Future<_i2.Either<_i5.ServerFailure, _i7.UserEntity>>);
 }

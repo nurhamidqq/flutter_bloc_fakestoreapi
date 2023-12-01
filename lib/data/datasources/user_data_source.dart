@@ -1,6 +1,7 @@
+import 'package:flutter_bloc_fakestoreapi/data/models/auth.dart';
 import 'package:flutter_bloc_fakestoreapi/data/models/user.dart';
 
 abstract class UserDataSource {
-  Future<String> userLogin(String username, String password);
-  Future<UserModel> userDetail(String id);
+  Future<AuthModel> userLogin(String email, String password);
+  Future<UserModel> userDetail(int id);
 }

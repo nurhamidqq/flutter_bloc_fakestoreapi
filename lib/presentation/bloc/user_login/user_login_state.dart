@@ -7,8 +7,8 @@ class UserLoginInitial extends UserLoginState {}
 class UserLoginLoading extends UserLoginState {}
 
 class UserLoginDone extends UserLoginState {
-  final String token;
-  UserLoginDone(this.token);
+  final AuthEntity auth;
+  UserLoginDone(this.auth);
 }
 
 class UserLoginError extends UserLoginState {

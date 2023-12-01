@@ -7,7 +7,7 @@ class UserDetail {
   final UserRepository userRepository;
   UserDetail(this.userRepository);
 
-  Future<Either<ServerFailure, UserEntity>> call(String id) async {
-    return await userRepository.userDetail(id);
+  Future<Either<ServerFailure, UserEntity>> call() async {
+    return await userRepository.userDetail();
   }
 }

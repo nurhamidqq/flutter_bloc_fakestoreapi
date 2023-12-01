@@ -6,11 +6,11 @@ part 'user_detail_event.dart';
 part 'user_detail_state.dart';
 
 class UserDetailBloc extends Bloc<UserDetailEvent, UserDetailState> {
-  UserDetail userDetail;
+  final UserDetail userDetail;
   UserDetailBloc({required this.userDetail}) : super(UserDetailInitial()) {
     on<FetchUserDetail>((event, emit) async {
       emit(UserDetailLoading());
-      final result = await userDetail(event.idUser);
+      final result = await userDetail();
       result.fold((failure) => emit(UserDetailError(failure.message)),
           (user) => emit(UserDetailLoaded(user)));
     });

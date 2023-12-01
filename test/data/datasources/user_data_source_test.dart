@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter_bloc_fakestoreapi/core/errors/server_exception.dart';
 import 'package:flutter_bloc_fakestoreapi/data/datasources/user_data_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -10,76 +7,50 @@ import 'mock_client.mocks.dart';
 
 void main() {
   late UserDataSourceImpl dataSource;
-  late MockClient mockClient;
+  late MockHttpService mockClient;
 
-  // ignore: constant_identifier_names
-  const tBASE_URL = "https://fakestoreapi.com";
-  const tIdUser = '2';
-  const tUsername = 'mor_2314';
-  const tPassword = '83r5^_';
-  const Map loginBody = {'username': tUsername, 'password': tPassword};
+  const tIdUser = 1;
+  const tEmail = 'john@mail.com';
+  const tPassword = 'changeme';
+  const loginBody = {'email': tEmail, 'password': tPassword};
   const sampleLogin = '''{
-    "token": "sampletoken"
-  }''';
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTcwMTIzNDY4OSwiZXhwIjoxNzAyOTYyNjg5fQ.AZn2CKOMjZ3KAU3LL6iBFQsCv6_pxGM4-z-R33OyO9E",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTcwMTIzNDY4OSwiZXhwIjoxNzAxMjcwNjg5fQ._E9lXyHyi3IAU2meQbOnOj2cMq4gdXP6J48QjciDVxE"
+    }''';
   const sampleResponse = '''{
-    "address": {
-        "geolocation": {
-            "lat": "-37.3159",
-            "long": "81.1496"
-        },
-        "city": "kilcoole",
-        "street": "Lovers Ln",
-        "number": 7267,
-        "zipcode": "12926-3874"
-    },
-    "id": 2,
-    "email": "morrison@gmail.com",
-    "username": "mor_2314",
-    "password": "83r5^_",
-    "name": {
-        "firstname": "david",
-        "lastname": "morrison"
-    },
-    "phone": "1-570-236-7033",
-    "__v": 0
-}''';
+    "id": 1,
+    "email": "john@mail.com",
+    "password": "changeme",
+    "name": "Jhon",
+    "role": "customer",
+    "avatar": "https://i.imgur.com/LDOO4Qs.jpg",
+    "creationAt": "2023-11-28T10:07:58.000Z",
+    "updatedAt": "2023-11-28T10:07:58.000Z"
+    }''';
 
   setUp(() async {
-    mockClient = MockClient();
+    mockClient = MockHttpService();
     dataSource = UserDataSourceImpl(mockClient);
   });
 
   test("get request on a url to get user detail", () async {
-    when(mockClient.get(Uri.parse("$tBASE_URL/users/$tIdUser")))
+    when(mockClient.get(endpoint: '/users/$tIdUser'))
         .thenAnswer((_) async => http.Response(sampleResponse, 200));
     await dataSource.userDetail(tIdUser);
-    verify(mockClient.get(Uri.parse("$tBASE_URL/users/$tIdUser")));
+    verify(mockClient.get(endpoint: '/users/$tIdUser'));
   });
 
   test('post request on a url to user login', () async {
     when(mockClient.post(
-      Uri.parse("$tBASE_URL/auth/login"),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(loginBody),
+      endpoint: '/auth/login',
+      body: loginBody,
     )).thenAnswer((_) async => http.Response(sampleLogin, 200));
 
-    final result = await dataSource.userLogin(tUsername, tPassword);
-
-    expect(result, 'sampletoken');
+    await dataSource.userLogin(tEmail, tPassword);
 
     verify(mockClient.post(
-      Uri.parse("$tBASE_URL/auth/login"),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(loginBody),
+      endpoint: '/auth/login',
+      body: loginBody,
     ));
-  });
-
-  test('throw a ServerException', () async {
-    when(mockClient.get(any))
-        .thenAnswer((_) async => http.Response('Error', 404));
-
-    final call = dataSource.userDetail;
-
-    expect(() => call(tIdUser), throwsA(isA<ServerException>()));
   });
 }

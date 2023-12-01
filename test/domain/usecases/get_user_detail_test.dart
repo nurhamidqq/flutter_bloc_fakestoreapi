@@ -15,30 +15,25 @@ void main() {
     usecase = UserDetail(mockUserRepository);
   });
 
-  const tIdUser = '2';
-
-  final sampleUser = UserEntity(
-      address: AddressEntity(
-          geolocation: GeolocationEntity(lat: '-37.3159', long: '81.1496'),
-          city: 'City A',
-          street: 'Street A',
-          number: 10,
-          zipcode: '12926-3874'),
-      id: 2,
-      email: 'email@gmail.com',
-      username: 'userA',
-      password: 'passA',
-      name: NameEntity(firstname: 'A', lastname: 'A'),
-      phone: '1-570-236-7033');
+  const sampleUser = UserEntity(
+    id: 1,
+    email: 'john@mail.com',
+    password: 'changeme',
+    name: 'Jhon',
+    role: 'customer',
+    avatar: 'https://i.imgur.com/LDOO4Qs.jpg',
+    creationAt: '2023-11-28T10:07:58.000Z',
+    updatedAt: '2023-11-28T10:07:58.000Z',
+  );
 
   test('user detail from repository', () async {
-    when(mockUserRepository.userDetail(tIdUser))
-        .thenAnswer((_) async => Right(sampleUser));
+    when(mockUserRepository.userDetail())
+        .thenAnswer((_) async => const Right(sampleUser));
 
-    final result = await usecase(tIdUser);
+    final result = await usecase();
 
-    expect(result, equals(Right(sampleUser)));
-    verify(mockUserRepository.userDetail(tIdUser));
+    expect(result, equals(const Right(sampleUser)));
+    verify(mockUserRepository.userDetail());
     verifyNoMoreInteractions(mockUserRepository);
   });
 }

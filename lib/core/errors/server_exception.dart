@@ -1,42 +1,45 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 class ServerException implements Exception {
-  final _message;
-  final _prefix;
+  final String? _message;
 
-  ServerException([this._message, this._prefix]);
+  ServerException([this._message]);
 
   @override
   String toString() {
-    return "$_prefix$_message";
+    return "$_message";
   }
 }
 
 class FetchDataException extends ServerException {
-  FetchDataException([String? message])
-      : super(message, "Error During Communication: ");
+  FetchDataException([String? message]) : super(message);
 }
 
 class BadRequestException extends ServerException {
-  BadRequestException([message]) : super(message, "Invalid Request: ");
+  BadRequestException([message]) : super(message);
 }
 
 class UnauthorisedException extends ServerException {
-  UnauthorisedException([message]) : super(message, "Unauthorised: ");
+  UnauthorisedException([message]) : super(message);
 }
 
 class InvalidInputException extends ServerException {
-  InvalidInputException([String? message]) : super(message, "Invalid Input: ");
+  InvalidInputException([String? message]) : super(message);
 }
 
 dynamic exceptionHandling(http.Response response) {
   switch (response.statusCode) {
     case 400:
-      throw BadRequestException(response.body.toString());
+      throw BadRequestException(
+          jsonDecode(response.body)['message'] ?? 'Bad request');
     case 401:
-      throw UnauthorisedException(response.body.toString());
+      throw UnauthorisedException(jsonDecode(response.body)['message'] ??
+          'Please check email or password');
     case 403:
-      throw UnauthorisedException(response.body.toString());
+      throw UnauthorisedException(
+          jsonDecode(response.body)['message'] ?? 'Forbidden Access');
     case 500:
     default:
       throw FetchDataException(
